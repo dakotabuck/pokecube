@@ -1,0 +1,35 @@
+<p>
+  <strong>Name:</strong>
+  <%= @cube.name %>
+</p>
+
+<% if @cube.description %>
+  <p>
+    <strong>Description:</strong>
+    <%= @cube.description %>
+  </p>
+<% end %>
+
+<p>This cube
+  <%= @cube.private %>
+  <% if @cube.private == true %>
+    <strong>is not</strong>
+  <% else %>
+    <strong>is</strong>
+  <% end %>
+  private.
+</p>
+
+<p>
+  Add a Card:
+  <%= form_with(model: [ @cube, @cube.cubecards.build ], local: true) do |form| %>
+  <p>
+    <%= number_field(:card, :id, in: 1.0..8000.0, step: 1) %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+  <% end %>
+</p>
+
+<%= link_to 'All cubes you own', controller: 'cubes' %>

@@ -1,0 +1,29 @@
+<fieldset><legend><h2>New Cube</h2></legend>
+<%= form_with scope: :cube, url: cubes_path, local: true do |form| %>
+
+  <% if @cube.errors.any? %>
+    <fieldset id="error_explanation">
+      <legend>
+        <%= pluralize(@cube.errors.count, "error") %> prohibited
+        this cube from being saved:
+      </legend>
+      <ul>
+        <% @cube.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <div><%= form.label :name %></div>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+</fieldset>
+
+<%= link_to 'Back', cubes_path %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_id: 1
+  image: MyString
+  cube_id: 
+  tags: MyText
+  pimp: MyString
+  rarity: MyString
+  side: false
+  timestamps: 2017-09-23 23:18:59
+
+two:
+  card_id: 1
+  image: MyString
+  cube_id: 
+  tags: MyText
+  pimp: MyString
+  rarity: MyString
+  side: false
+  timestamps: 2017-09-23 23:18:59

@@ -1,0 +1,18 @@
+<h1>Listing all Cubes <!-- authored by x --></h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+  <% @cubes.each do |cube| %>
+    <tr>
+      <td><%= cube.name %></td>
+      <td><%= cube.description %></td>
+      <td><%= link_to 'Show', cube_path(cube) %> | <%= link_to 'Edit', edit_cube_path(cube) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'New cube', new_cube_path %>

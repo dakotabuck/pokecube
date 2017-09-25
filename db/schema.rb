@@ -26,4 +26,15 @@ ActiveRecord::Schema.define(version: 20170925164638) do
     t.index ["cube_id"], name: "index_cube_cards_on_cube_id"
   end
 
+  create_table "cubes", force: :cascade do |t|
+    t.string "name"
+    t.integer "owner"
+    t.text "description"
+    t.boolean "has_img"
+    t.boolean "private"
+    t.datetime "create_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end

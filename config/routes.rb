@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :cubes#, :cards
   resources :cubes do
-    resources :cubecards
+    resources :cube_cards
   end
 
   root 'welcome#index'

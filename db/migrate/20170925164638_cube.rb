@@ -7,7 +7,8 @@ class Cube < ActiveRecord::Migration[5.1]
       t.boolean :has_img
       t.boolean :private
       t.datetime :create_date
-      
+
       t.timestamps
+    end
   end
 end

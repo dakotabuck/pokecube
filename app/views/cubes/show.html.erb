@@ -11,11 +11,10 @@
 <% end %>
 
 <p>This cube
-  <%= @cube.private %>
   <% if @cube.private == true %>
-    <strong>is not</strong>
-  <% else %>
     <strong>is</strong>
+  <% elsif @cube.private == false %>
+    <strong>is not</strong>
   <% end %>
   private.
 </p>

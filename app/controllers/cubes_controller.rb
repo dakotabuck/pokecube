@@ -32,6 +32,12 @@ class CubesController < ApplicationController
   def update
     @cube = Cube.find(params[:id])
 
+    if params[:private] == "1"
+      @cube.private = true
+    else
+      @cube.private = false
+    end
+
     if @cube.update(cube_params)
       redirect_to @cube
     else

@@ -8,7 +8,7 @@ To install this rails app, simply clone the directory, navigate to it and type:
 
 To do
 -----
-* Import card data to table "*cards*" from _app/assets/pokemoncards.xml_
+* Import card data to table "*cards*" from [pokemoncards.xml](app/assets/pokemoncards.xml)
 * Import stylesheets and operation js from other project
 * Establish database relational columns
 * Add basic accounts system
@@ -23,4 +23,8 @@ To do
 * Search / Browse feature
 * Shop options
 * Blog options / note options
-* Fave / upvote abilities 
+* Fave / upvote abilities
+
+Other Notes
+-----------
+* You can view projected database structures [here](app/assets/database_structure.md)

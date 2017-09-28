@@ -1,10 +1,10 @@
 Proposed Database Structure:
 ----------------------------
     Users
-     id        | name       | password                | email      | dob        | perms      | account_date
-     0001      | kotapie    | :crow:__khav87n86oweru  | g@ex.gg    | 19960618   | 11111111   | 20170923
-     0002      | bantyness  | :crow:__7adf74dnfqcfi8  | b@cb.ot    | 19890904   | 10010011   | 20171010
-     0003      | roro       | :crow:__m74jd9qnv83nf9  | r@art.st   | 19900205   | 00000011   | 20171128
+     id        | name       | password              | email      | dob        | perms      | account_date
+     0001      | kotapie    | :crow:khav87n86oweru  | g@ex.gg    | 19960618   | 11111111   | 20170923
+     0002      | bantyness  | :crow:7adf74dnfqcfi8  | b@cb.ot    | 19890904   | 10010011   | 20171010
+     0003      | roro       | :crow:m74jd9qnv83nf9  | r@art.st   | 19900205   | 00000011   | 20171128
      ...
 
 id: integer / autoincrement  
@@ -45,8 +45,8 @@ has_img: boolean
 private: boolean (can be viewed as a guest or by other users)  
   / consider int-based privacy settings  
 create_date: datetime  
-_HAS MANY COMMENTS_  
-*Consider*: _BELONGS TO USER_  
+__HAS MANY COMMENTS__  
+*Consider*: __BELONGS TO USER__  
 
     Cube_cards
       id        | card_id    | cust_img   | cube_id    | tags       | pimp      | rarity    | side      | add_date

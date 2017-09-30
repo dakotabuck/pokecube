@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  set: MyString
+  number: 1
+  type: 
+  hp: 1
+  stage: MyString
+  retreat: 1
+  rarity: MyString
+  dtype: MyString
+
+two:
+  name: MyString
+  set: MyString
+  number: 1
+  type: 
+  hp: 1
+  stage: MyString
+  retreat: 1
+  rarity: MyString
+  dtype: MyString

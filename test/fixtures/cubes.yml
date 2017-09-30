@@ -2,7 +2,7 @@
 
 one:
   name: MyString
-  owner_id: 
+  # owner_id: 
   description: MyText
   has_img: false
   private: false
@@ -10,7 +10,7 @@ one:
 
 two:
   name: MyString
-  owner_id: 
+  # owner_id:
   description: MyText
   has_img: false
   private: false

@@ -18,10 +18,10 @@ document.querySelectorAll("card").forEach(function (card) {
     return card.querySelector(str).innerHTML.replace("'", "\\" + "'");
   };
   var escapeInt = function (str) {
-    if (typeof parseInt(card.querySelector(str).innerHTML, 10) !== "NaN") {
+    if (isFinite(parseInt(card.querySelector(str).innerHTML, 10))) {
       return parseInt(card.querySelector(str).innerHTML, 10);
     } else {
-      return '';
+      return "''";
     }
   }
   var cardData = [

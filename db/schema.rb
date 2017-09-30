@@ -12,6 +12,21 @@
 
 ActiveRecord::Schema.define(version: 20170929230440) do
 
+  create_table "cards", force: :cascade do |t|
+    t.string "name"
+    t.integer "set"
+    t.integer "number"
+    t.integer "type"
+    t.integer "hp"
+    t.integer "stage"
+    t.integer "retreat"
+    t.string "rarity"
+    t.integer "dtype"
+    t.string "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cube_cards", force: :cascade do |t|
     t.integer "card_id"
     t.string "image"

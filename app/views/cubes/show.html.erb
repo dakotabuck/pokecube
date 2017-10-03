@@ -32,6 +32,7 @@
       #   for each card upon selection (by Option.value)
       number_field(:card, :id, in: 1.0..8000.0, step: 1)
     %>
+    <%= hidden_field_tag :id, @cube.id %>
   </p>
   <p>
     <%= form.submit %>

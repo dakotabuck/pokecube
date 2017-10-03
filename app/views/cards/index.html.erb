@@ -1,0 +1,20 @@
+Listing all cards!
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Set</th>
+    <th>Number</th>
+  </tr>
+
+  <% @cards.each do |card| %>
+    <tr>
+      <td><%= card.name %></td>
+      <td><%= card.set %></td>
+      <td><%= card.number %></td>
+      <td><%= link_to 'Show', card_path(card) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'New card', new_card_path %>

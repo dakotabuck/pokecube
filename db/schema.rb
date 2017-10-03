@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929230440) do
+ActiveRecord::Schema.define(version: 20170930205040) do
 
   create_table "cards", force: :cascade do |t|
     t.string "name"
-    t.integer "set"
+    t.string "set"
     t.integer "number"
-    t.integer "type"
+    t.string "pokemontype"
     t.integer "hp"
-    t.integer "stage"
+    t.string "stage"
     t.integer "retreat"
     t.string "rarity"
-    t.integer "dtype"
-    t.string "photo"
+    t.string "dtype"
+    t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 20170929230440) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.date "dob"
+    t.binary "perms"
+    t.datetime "account_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

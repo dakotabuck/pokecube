@@ -1,0 +1,13 @@
+<div style="display: flex;">
+  <div>
+    <p>Name: <%= @card.name %></p>
+    <p>Set: <%= @card.set %></p>
+    <p>Number: <%= @card.number %></p>
+    <p>Type: <%= @card.pokemontype %></p>
+    <p>Stage: <%= @card.stage %></p>
+    <p>Rarity: <%= @card.rarity %></p>
+  </div>
+  <div>
+    <%= image_tag @card.image, alt: @card.name %>
+  </div>
+</div>

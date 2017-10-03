@@ -1,0 +1,62 @@
+<%= form_with(model: @card) do |form| %>
+
+  <% if @card.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@card.errors.count, "error") %> prohibited
+        this card from being saved:
+      </h2>
+      <ul>
+        <% @card.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :set %>
+    <%= form.text_field :set %>
+  </p>
+  <p>
+    <%= form.label :number %>
+    <%= form.number_field :number, in: 1.0..500.0, step:1 %>
+  </p>
+  <p>
+    <%= form.label :pokemontype %>
+    <%= form.text_field :pokemontype %>
+  </p>
+  <p>
+    <%= form.label :hp %>
+    <%= form.number_field :hp, in: 0.0..500.0, step: 1 %>
+  </p>
+  <p>
+    <%= form.label :stage %>
+    <%= form.text_field :stage %>
+  </p>
+  <p>
+    <%= form.label :retreat %>
+    <%= form.number_field :retreat, in: 0.0..15.00, step: 1 %>
+  </p>
+  <p>
+    <%= form.label :rarity %>
+    <%= form.text_field :rarity %>
+  </p>
+  <p>
+    <%= form.label :dtype %>
+    <%= form.text_field :dtype %>
+  </p>
+  <p>
+    <%= form.label :image %>
+    <%= form.text_field :image %>
+    (Note: you should link to the relative image, placed in assets/images)
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<%= link_to "Back", cards_path %>

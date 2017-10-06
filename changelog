@@ -1,6 +1,0 @@
-9/25/2017 6 PM (Chris):
-Seems like it was all a naming issue!
-Added an "end" to cube migration
-Added ":class_name => CubeCard" to cube.rb (the cube didn't know what class to point to)
-Added a middle underscore to :cubecards in routes.rb line 6
-Edited Readme

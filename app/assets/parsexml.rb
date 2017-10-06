@@ -8,6 +8,7 @@ require 'open-uri'
 doc = Nokogiri::XML(open("app/assets/pokemoncards.xml"))
 
 cards = doc.xpath("//card")
+puts cards.count
 
 cards.each do |entry|
   name = entry.xpath("name").text

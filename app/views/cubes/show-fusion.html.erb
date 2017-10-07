@@ -1,0 +1,199 @@
+<p>
+  <strong>Name:</strong>
+  <%= @cube.name %>
+</p>
+
+<% if @cube.description %>
+  <p>
+    <strong>Description:</strong>
+    <%= @cube.description %>
+  </p>
+<% end %>
+
+<p>This cube
+  <% if @cube.private == true %>
+    <strong>is</strong>
+  <% elsif @cube.private == false %>
+    <strong>is not</strong>
+  <% end %>
+  private.
+</p>
+
+<% typelist = ["Grass",
+"Fire",
+"Water",
+"Lightning",
+"Psychic",
+"Fighting",
+"Darkness",
+"Metal",
+"Colorless",
+"Fairy",
+"Dragon",
+"Trainer"]
+typecount = 0
+classcount = 0
+
+classlist = ["Stage 2 Line - Basic",
+"Stage 2 Line - Stage 1",
+"Stage 2 Line - Stage 2",
+"Stage 1 Line - Basic",
+"Stage 1 Line - Stage 1",
+"Basic Only",
+"Special",
+"Type-Specific Trainer",
+"Supporter",
+"Item",
+"Tool",
+"Stadium",
+"Special Energy",
+"Ace-Spec"] %>
+<% typelist.each do |type| %>
+  <fieldset class="<%= type %>-set">
+    <legend><%= type %> Cards</legend>
+    <div>
+    <% classlist.each do |classification| %>
+    <% if (classcount == 0 || classcount == 3 || classcount == 5) && typecount != 11 %>
+      <div>
+    <% end %>
+    <% if (classcount <= 7 && typecount != 11) || (classcount >= 8 && typecount == 11) %>
+      <div class="typesep">
+          <p><%= classification %></p>
+          <ul>
+            <% @cube.cube_cards.each do |card| %>
+              <%
+                card_inf = Card.where(:id => card.card_id).take
+
+                set_abbreviations = {
+                  "crimson-invasion" => "cri",
+                  "shining-legends" => "shl",
+                  "burning-shadows" => "bus",
+                  "guardians-rising" => "gri",
+                  "sun-and-moon" => "sum",
+                  "evolutions" => "evo",
+                  "steam-siege" => "sts",
+                  "fates-collide" => "fco",
+                  "generations" => "gen",
+                  "breakpoint" => "bkp",
+                  "breakthrough" => "bkt",
+                  "ancient-origins" => "aor",
+                  "roaring-skies" => "ros",
+                  "double-crisis" => "dcr",
+                  "primal-clash" => "prc",
+                  "phantom-forces" => "phf",
+                  "furious-fists" => "ffi",
+                  "flashfire" => "flf",
+                  "xy" => "xy",
+                  "kalos-starter-set" => "kss",
+                  "xy-promos" => "pr",
+                  "legendary-treasures" => "ltr",
+                  "plasma-blast" => "plb",
+                  "plasma-freeze" => "plf",
+                  "plasma-storm" => "pls",
+                  "boundaries-crossed" => "bcr",
+                  "dragon-vault" => "drv",
+                  "dragons-exalted" => "drx",
+                  "dark-explorers" => "dex",
+                  "next-destinies" => "nxd",
+                  "noble-victories" => "nvi",
+                  "emerging-powers" => "epo",
+                  "black-and-white" => "blw",
+                  "black-and-white-promos" => "pr",
+                  "mcdonald-s-collection-2011" => "mcd",
+                  "mcdonald-s-collection-2012" => "mcd",
+                  "call-of-legends" => "cl",
+                  "triumphant" => "tm",
+                  "undaunted" => "ud",
+                  "unleashed" => "ul",
+                  "heartgold-and-soulsilver" => "hs",
+                  "heartgold-and-soulsilver-promos" => "pr",
+                  "arceus" => "ar",
+                  "supreme-victors" => "sv",
+                  "rising-rivals" => "rr",
+                  "platinum" => "pl",
+                  "stormfront" => "sf",
+                  "legends-awakened" => "la",
+                  "majestic-dawn" => "md",
+                  "great-encounters" => "ge",
+                  "secret-wonders" => "sw",
+                  "mysterious-treasures" => "mt",
+                  "diamond-and-pearl" => "dp",
+                  "diamond-and-pearl-promos" => "pr",
+                  "power-keepers" => "pk",
+                  "dragon-frontiers" => "df",
+                  "crystal-guardians" => "cg",
+                  "holon-phantoms" => "hp",
+                  "legend-maker" => "lm",
+                  "delta-species" => "ds",
+                  "unseen-forces" => "uf",
+                  "emerald" => "em",
+                  "deoxys" => "dx",
+                  "team-rocket-returns" => "rr",
+                  "firered-and-leafgreen" => "rg",
+                  "hidden-legends" => "hl",
+                  "team-magma-vs-team-aqua" => "ma",
+                  "dragon" => "dr",
+                  "sandstorm" => "ss",
+                  "ruby-and-sapphire" => "rs",
+                  "skyridge" => "sk",
+                  "aquapolis" => "aq",
+                  "expedition" => "ex",
+                  "neo-destiny" => "n4",
+                  "neo-revelation" => "n3",
+                  "neo-discovery" => "n2",
+                  "neo-genesis" => "n1",
+                  "gym-challenge" => "g2",
+                  "gym-heroes" => "g1",
+                  "team-rocket" => "tr",
+                  "base-set-2" => "b2",
+                  "fossil" => "fo",
+                  "jungle" => "ju",
+                  "base-set" => "bs",
+                  "rumble" => "ru",
+                  "legendary-collection" => "lc",
+                  "southern-islands" => "si"
+                }
+                %>
+                <legend><strong><%= card_inf[:name] %></strong></legend>
+                <%
+                if card_inf.nil?
+                  exit
+                else
+                  card_arr = {
+                    :name => card_inf[:name].downcase.sub(" ", "-").gsub(/[^\w\-]/, ""),
+                    :set => card_inf[:set].downcase.sub(" ", "-").gsub(/[^\w\-]/, "")
+                  }
+                  card_arr[:abbr] = set_abbreviations[card_arr[:set]]
+                  if card_arr[:abbr].nil?
+                    card_link = card_inf.inspect
+                    %>
+                      <p><%= card_link %></p>
+                    <%
+                  elsif  classlist[card_inf[:stage]] == classification && typelist[card_inf[:pokemontype]] == type
+                    card_link = "https://pkmncards.com/wp-content/uploads/" + card_arr[:name] + '-' + card_arr[:set] + '-' + card_arr[:abbr] + '-' + card_inf[:number].to_s + ".jpg"
+                    %>
+                      <p><%= image_tag card_link, alt: "https://pkmncards.com/wp-content/uploads/" + card_arr[:name] + '-' + card_arr[:set] + '-' + card_arr[:abbr] + '-' + card_inf[:number].to_s + ".jpg" %></p>
+                    <%
+                  end
+                end
+              end
+              %>
+            </ul>
+
+        </div>
+      <% end %>
+      <% classcount += 1 %>
+      <% if (classcount == 3 || classcount == 5 || classcount == 7) && typecount != 11 %>
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+  </fieldset>
+  <% typecount += 1
+    classcount = 0
+  %>
+<% end %>
+
+<%= render 'cards/add_card' %>
+
+<%= link_to 'All cubes you own', controller: 'cubes' %>

@@ -1,0 +1,19 @@
+<p>
+  Add a Card:
+  <%= form_with(model: [ @cube, @cube.cube_cards.build ], local: true) do |form| %>
+  <p>
+    <%=
+      # This will eventually be replaced by a <select><option> each with the
+      #   name of the card, the set, and the number with values equal to ID
+      #   for easy insertion into cube_cards table.
+
+      # Will also consider adding a coffee script that loads the image asset
+      #   for each card upon selection (by Option.value)
+      form.number_field :card_id, value: 1
+    %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+  <% end %>
+</p>

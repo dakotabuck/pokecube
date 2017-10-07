@@ -1,0 +1,20 @@
+<p>
+  <strong>Name:</strong>
+  <%= @cube.name %>
+</p>
+
+<% if @cube.description %>
+  <p>
+    <strong>Description:</strong>
+    <%= @cube.description %>
+  </p>
+<% end %>
+
+<p>This cube
+  <% if @cube.private == true %>
+    <strong>is</strong>
+  <% elsif @cube.private == false %>
+    <strong>is not</strong>
+  <% end %>
+  private.
+</p>

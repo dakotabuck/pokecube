@@ -19,9 +19,11 @@
   private.
 </p>
 
+<%= render @cube.cube_cards %>
+
 <p>
   Add a Card:
-  <%= form_with(model: [ @cube, @cube.cubecards.build ], local: true) do |form| %>
+  <%= form_with(model: [ @cube, @cube.cube_cards.build ], local: true) do |form| %>
   <p>
     <%=
       # This will eventually be replaced by a <select><option> each with the
@@ -30,9 +32,8 @@
 
       # Will also consider adding a coffee script that loads the image asset
       #   for each card upon selection (by Option.value)
-      number_field(:card, :id, in: 1.0..8000.0, step: 1)
+      form.number_field :card_id, value: 1
     %>
-    <%= hidden_field_tag :id, @cube.id %>
   </p>
   <p>
     <%= form.submit %>

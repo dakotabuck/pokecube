@@ -17,19 +17,19 @@ account_date: datetime
 
     Cards
       id        | name       | set        | number     | type       | hp        | stage       | retreat     | rarity      | dtype       | description | create_date
-      1         | Pikachu    | 1          | 24         | 3          | 50        | 1           |             | Promo       |             |             | 20170924
+      1         | Pikachu    | Rising Riv | 24D        | Electric   | 50        | Stage 1     |             | Promo       |             |             | 20170924
       ...
 
 id: integer / autoincrement  
 name: string  
-set: integer (reference to array)  
-number: integer  
-type: integer (reference to array)  
+set: string
+number: string  
+type: string  
 hp: integer  
-stage: integer (reference to array)  
+stage: Stage 1  
 retreat: integer  
-rarity: string (validated by array, can also be array reference int)  
-dtype: integer (reference to type array) (double-type)  
+rarity: string
+dtype: string  
 description: text  
 
     Cubes
@@ -56,7 +56,7 @@ __HAS MANY COMMENTS__
 id: integer / autoincrement  
 card_id: integer / reference (reference to a card ID)  
 image: string (ref to internally stored img)  
-cube_id: integer / reference (reference to a cube ID) // BELONGS TO CUBE  
+cube: references / Belongs to Cube  
 tags: text (Many to one array, but manageable and comma separable)  
 pimp: integer (binary set of numbers indicating status)  
 rarity: string (validated by array, can also be array reference int)  

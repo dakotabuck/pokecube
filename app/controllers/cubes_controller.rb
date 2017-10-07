@@ -8,7 +8,7 @@ class CubesController < ApplicationController
 
   def show
     @cube = Cube.find(params[:id])
-    @cubecards = Cubecards.where(:cube_id => params[:id])
+    @cubecards = CubeCard.where(:cube_id => params[:id])
   end
 
   def new

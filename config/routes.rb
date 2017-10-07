@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   resources :cards
 
-  resources :cubes#, :cards
   resources :cubes do
     resources :cube_cards
   end

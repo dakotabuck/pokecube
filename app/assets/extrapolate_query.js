@@ -1,4 +1,4 @@
-var allQuery, setList, dataTypes, makeSet;
+var allQuery, setList, dataTypes, makeSet, count = 0;
 
 allQuery = [];
 
@@ -13,7 +13,8 @@ dataTypes = {
 };
 allQuery = [];
 document.querySelectorAll("card").forEach(function (card) {
-  var a = [], count = 0;
+  var a = [];
+  count++;
   var escapeName = function (str) {
     return card.querySelector(str).innerHTML.replace("'", "\\" + "'");
   };
@@ -25,18 +26,21 @@ document.querySelectorAll("card").forEach(function (card) {
     }
   }
   var cardData = [
+    count,
     "'" + escapeName("name") + "'",
     "'" + escapeName("set") + "'",
     escapeInt("number"),
     "'" + escapeName("type") + "'",
+    escapeInt("hp"),
     "'" + escapeName("stage") + "'",
     escapeInt("retreat"),
-    "'" + escapeName("rarity") + "'"
+    "'" + escapeName("rarity") + "'",
+    "'" + escapeName("dtype") + "'"
   ];
 
   allQuery.push("(" + cardData.join(",") + ")");
 });
 
-allQuery = allQuery.join(',');
+allQuery = allQuery.join(',');document.querySelector("cards").innerHTML = allQuery;
 // the following will punctuate the query for execution in rails ActiveDirectory
 //allQuery = "INSERT INTO cards (name, set, number, type, hp, stage, retreat, rarity, dtype, description | create_date"

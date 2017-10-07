@@ -1,6 +1,5 @@
 class CreateCards < ActiveRecord::Migration[5.1]
   def change
-    drop_table :cards
     create_table :cards do |t|
       t.string :name
       t.string :set

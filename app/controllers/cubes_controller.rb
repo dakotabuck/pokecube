@@ -17,7 +17,8 @@ class CubesController < ApplicationController
 
   # Code for handling submitted form data for cubes/new/
   def create
-    @cube = Cube.new(cube_params)
+    @cube = Cube.new(new_cube_params)
+    @cube.private = "1"
 
     if @cube.save
       redirect_to @cube
@@ -57,5 +58,9 @@ class CubesController < ApplicationController
     # Strong Parameters validation
     def cube_params
       params.require(:cube).permit(:name, :description, :private)
+    end
+
+    def new_cube_params
+      params.require(:cube).permit(:name)
     end
 end

@@ -1,5 +1,4 @@
 <fieldset>
-  <legend><strong>Card Included</strong></legend>
   <%
     card_inf = Card.where(:id => cube_card.card_id).take
 
@@ -92,17 +91,29 @@
       "legendary-collection" => "lc",
       "southern-islands" => "si"
     }
-
-    if card_inf != nil
+    %>
+    <legend><strong><%= card_inf[:name] %></strong></legend>
+    <%
+    if card_inf.nil?
+      exit
+    else
       card_arr = {
         :name => card_inf[:name].downcase.sub(" ", "-").gsub(/[^\w\-]/, ""),
         :set => card_inf[:set].downcase.sub(" ", "-").gsub(/[^\w\-]/, "")
       }
       card_arr[:abbr] = set_abbreviations[card_arr[:set]]
-      card_link = "https://pkmncards.com/wp-content/uploads/" + card_arr[:name] + '-' + card_arr[:set] + '-' + card_arr[:abbr] + '-' + card_inf[:number].to_s + ".jpg"
-
+      if card_arr[:abbr].nil?
+        card_link = card_arr.inspect
+        %>
+          <p><%= card_link %></p>
+        <%
+      else
+        card_link = "https://pkmncards.com/wp-content/uploads/" + card_arr[:name] + '-' + card_arr[:set] + '-' + card_arr[:abbr] + '-' + card_inf[:number].to_s + ".jpg"
+        %>
+          <p><%= image_tag card_link, alt: "https://pkmncards.com/wp-content/uploads/" + card_arr[:name] + '-' + card_arr[:set] + '-' + card_arr[:abbr] + '-' + card_inf[:number].to_s + ".jpg" %></p>
+        <%
+      end
   %>
-    <p><%= image_tag card_link %></p>
     <!-- card_link = card_inf.name.downcase.sub! " ", "-" >
     < card_link = card_link + "-" + card_inf.set.downcase.gsub(" ", "-") >
     <
@@ -112,5 +123,7 @@
       card_link = card_link + "-" + card_inf.number
       card_link = "https://pkmncards.com/wp-content/uploads/" + card_link + ".jpg" >
     < card_link -->
+    <%= link_to 'Remove', [cube_card.cube, cube_card],
+               method: :delete  %>
   <% end %>
 </fieldset>

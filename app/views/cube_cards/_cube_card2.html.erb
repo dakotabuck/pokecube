@@ -1,0 +1,7 @@
+<%
+  current_card = Pokemon::Card.find(cube_card.card_id)
+%>
+<fieldset>
+  <legend><%= current_card.name %></legend>
+  <%= image_tag current_card.image_url, alt: current_card.name + " (" + current_card.set + " " + current_card.number + ")" %>
+</fieldset>

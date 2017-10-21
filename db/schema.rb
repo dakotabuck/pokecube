@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171021212441) do
 
+
   create_table "cards", force: :cascade do |t|
     t.string "name"
     t.string "set"

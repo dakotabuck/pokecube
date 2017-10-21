@@ -1,5 +1,7 @@
 require_relative 'boot'
 
+require 'openssl'
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

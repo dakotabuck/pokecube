@@ -1,7 +1,8 @@
 class CreateCubeCards < ActiveRecord::Migration[5.1]
   def change
     create_table :cube_cards do |t|
-      t.integer :card_id
+      t.string :set_id
+      t.string :card_number
       t.string :image
       t.references :cube, foreign_key: true
       t.text :tags

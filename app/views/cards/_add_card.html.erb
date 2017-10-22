@@ -10,7 +10,7 @@
           <%= content_tag :option, set_option.name, value: set_option.code %>
       <% end %>
     <% end %>
-    <%= form.number_field :number, in:1..300, step: 1 %>
+    <%= form.number_field :card_number, in:1..300, step: 1 %>
   </p>
   <p>
     <%= form.submit %>

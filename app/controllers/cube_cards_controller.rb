@@ -15,7 +15,7 @@ class CubeCardsController < ApplicationController
 
   private
     def cube_card_params
-      params.require(:cube_card).permit(:cube_id, :set_id, :number)
+      params.require(:cube_card).permit(:cube_id, :set_id, :card_number)
       #params.require(:card)
     end
 end

@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021212441) do
-
+ActiveRecord::Schema.define(version: 20171021211030) do
 
   create_table "cards", force: :cascade do |t|
     t.string "name"
     t.string "set"
-    t.integer "number"
+    t.string "number"
     t.string "pokemontype"
     t.integer "hp"
     t.string "stage"
@@ -29,7 +28,8 @@ ActiveRecord::Schema.define(version: 20171021212441) do
   end
 
   create_table "cube_cards", force: :cascade do |t|
-    t.integer "card_id"
+    t.string "set_id"
+    t.string "card_number"
     t.string "image"
     t.integer "cube_id"
     t.text "tags"
@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 20171021212441) do
     t.datetime "timestamps"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "set_id"
-    t.string "card_number"
     t.index ["cube_id"], name: "index_cube_cards_on_cube_id"
   end
 
@@ -59,11 +57,11 @@ ActiveRecord::Schema.define(version: 20171021212441) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.date "dob"
     t.binary "perms"
     t.datetime "account_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

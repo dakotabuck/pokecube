@@ -1,3 +1,144 @@
 // Place all the styles related to the Cubes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'reset';
+
+body {
+  font: 100% Helvetica, sans-serif;
+  background-color: #efefef;
+}
+
+a:link, a:visited {
+  color: #33a;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+  color:#aaa;
+}
+
+#preview-container {
+  padding: 5px 15px 5px 15px;
+}
+
+#preview-delete {
+  float: right;
+}
+
+#content {
+  display: flex;
+}
+
+#cubelist, #cube-stats {
+  border-left: 1px dotted black;
+  padding: 0px 15px 0px 15px;
+  flex-grow: 2;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+#preview-img {
+  /*max-width: 360px;*/
+  width: 360px;
+}
+
+fieldset {
+  border-style: none;
+  margin-bottom: 15px;
+
+  legend {
+    padding: 5px 10px 0px 10px;
+  }
+}
+
+.supertype {
+  text-align: center;
+  background-color: #fcfcfc;
+}
+
+.supertype > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  font: .72em Helvetica, sans-serif;
+}
+
+.typesep {
+  border: 1px solid #ddd;
+  padding: 0px;
+  margin: 5px;
+}
+
+.typesep p {
+  text-align: center;
+}
+
+.Trainer-set, .Trainer-set > legend {
+  background-color: #ddf;
+}
+
+.Grass-set, .Grass-set > legend {
+  background-color: #bfb;
+}
+
+.Lightning-set, .Lightning-set > legend {
+  background-color: #ff3;
+}
+
+.Darkness-set {
+  background-color: #305;
+
+  legend {
+    background-color: #305;
+    color: #fff;
+  }
+}
+
+.Fairy-set, .Fairy-set > legend {
+  background-color: #fcf;
+}
+
+.Fire-set, .Fire-set > legend {
+  background-color: #faa;
+}
+
+.Psychic-set, .Psychic-set > legend {
+  background-color: #daf;
+}
+
+.Metal-set, .Metal-set > legend {
+  background-color: #aaf;
+}
+
+.Dragon-set, .Dragon-set > legend {
+  background-color: #fdb;
+}
+
+.Water-set, .Water-set > legend {
+  background-color: #aaf;
+}
+
+.Fighting-set, .Fighting-set > legend {
+  background-color: #d70;
+}
+
+.Colorless-set, .Colorless-set > legend {
+  background-color: #bbb;
+}
+
+.subtype {
+   p {
+     margin: 0px;
+     padding: 5px 15px 5px 15px;
+     border-bottom: 1px dotted #ddd;
+   }
+
+   ul {
+     list-style-type: none;
+     padding: 5px 15px 5px 15px;
+   }
+}

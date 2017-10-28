@@ -1,23 +1,13 @@
 <% card_inf = Pokemon::Card.find(cube_card.set_id.to_s + '-' + cube_card.card_number.to_s) %>
-  <fieldset>
-    <legend><strong><%= card_inf.name %></strong></legend>
-    <%
-    if card_inf.nil?
-      exit
-    else
-    %>
-      <p><%= card_inf.image_url %></p>
-      <p><%= image_tag card_inf.image_url, alt: card_inf.image_url %></p>
-    <% end %>
-      <!-- card_link = card_inf.name.downcase.sub! " ", "-" >
-      < card_link = card_link + "-" + card_inf.set.downcase.gsub(" ", "-") >
-      <
-        abbreviations = {"risingrivals" => "rr"}
-
-        card_link = card_link + "-" + abbreviations[card_inf.set.downcase.gsub("[\W]", "")]
-        card_link = card_link + "-" + card_inf.number
-        card_link = "https://pkmncards.com/wp-content/uploads/" + card_link + ".jpg" >
-      < card_link -->
-      <%= link_to 'Remove', [cube_card.cube, cube_card],
-                 method: :delete  %>
-  </fieldset>
+<fieldset>
+  <legend><strong><%= card_inf.name %></strong></legend>
+  <%
+  if card_inf.nil?
+    exit
+  else
+  %>
+    <p><%= card_inf.image_url %></p>
+    <p><%= image_tag card_inf.image_url, alt: card_inf.image_url %></p>
+  <% end %>
+  <%= link_to 'Remove', [cube_card.cube, cube_card], method: :delete  %>
+</fieldset>

@@ -1,7 +1,96 @@
+<h2>Cards</h2>
+<% allcards = [] %>
 <%
-  current_card = Pokemon::Card.find(cube_card.card_id)
+  # Build a model of cards to add, with all relevant information in place:
+  def TypeObj
+    return {
+      "Pokémon" => {
+        "MEGA" => [],
+        "Level Up" => [],
+        "EX" => [],
+        "Restored" => [],
+        "Stage 1" => [],
+        "LEGEND" => [],
+        "BREAK" => [],
+        "Stage 2" => [],
+        "Basic" => []
+      },
+      "Energy" => {
+        "Special" => []
+      },
+      "Trainer" => {
+        "Item" => [],
+        "Supporter" => [],
+        "Technical Machine" => [],
+        "Rocket's Secret Machine" => [],
+        "Stadium" => [],
+        "BREAK" => [],
+        "Pokémon Tool" => []
+      }
+    }
+  end
+
+  {
+    "Colorless" => TypeObj(),
+    "Dark" => TypeObj(),
+    "Darkness" => TypeObj(),
+    "Dragon" => TypeObj(),
+    "Fairy" => TypeObj(),
+    "Fighting" => TypeObj(),
+    "Fire" => TypeObj(),
+    "Grass" => TypeObj(),
+    "Lightning" => TypeObj(),
+    "Metal" => TypeObj(),
+    "Psychic" => TypeObj(),
+    "Water" => TypeObj()
+  }
 %>
-<fieldset>
-  <legend><%= current_card.name %></legend>
-  <%= image_tag current_card.image_url, alt: current_card.name + " (" + current_card.set + " " + current_card.number + ")" %>
-</fieldset>
+<!--
+  to do:
+    Build a model of the cards to add, with all relative information in place. Then, read it out to the necessary fields. example:
+    factored = {
+      types: {
+        "Colorless": {
+          "Stage 1": [Pokemon::Card(Linoone), Pokemon::Card(Clefable)],
+          "Stage 2": [],
+          "Basic": [Pokemon::Card(Clefairy), Pokemon::Card(Zigzagoon)]
+        },
+        "Electric": {
+          "Stage 1": [Pokemon::Card(Pikachu)]
+        }
+      }
+    }
+
+    Then, do a .each for factored.types as |typeset|
+      <div/typeset.name>
+      Then, typeset.each do |subtype|
+        if subtype !empty
+          <div/subtype.name>
+          Then, subtype.each do |card|
+            <linkto/card>
+          e
+        e
+      e
+    e
+-->
+<% @cube.cube_cards.each do |cube_card| %>
+  <% allcards << [Pokemon::Card.find(cube_card.set_id + "-" + cube_card.card_number), [cube_card.cube, cube_card]] %>
+<% end %>
+<% Pokemon::Type.all.each  do |type| %>
+  <%= content_tag :fieldset, style: "display: flex", class: type + "-set" do -%>
+    <%= content_tag :legend, type + " Cards" %>
+    <%= content_tag :div do -%>
+      <% Pokemon::Subtype.all.each do |subtype| %>
+        <%= content_tag :fieldset, style: "display: inline-flex; flex-direction: column" do -%>
+          <%= content_tag :legend, subtype %>
+          <% allcards.each do |card_inf| %>
+            <% if subtype == card_inf[0].subtype && card_inf[0].types[0] == type %>
+                <%= link_to card_inf[0].name, card_inf[1], data: { :image => card_inf[0].image_url }  %>
+                <!--<= link_to 'Remove', [cube_card.cube, cube_card], method: :delete  %>-->
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

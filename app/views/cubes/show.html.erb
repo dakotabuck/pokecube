@@ -1,7 +1,36 @@
+<div id="content">
+<div id="preview">
+  <div id="preview-container"><a id="preview-edit" href="#">Edit</a><a id="preview-delete" data-method="delete" href="#">Delete</a></div>
+  <img src="https://images.pokemontcg.io/ex4/0.png" alt="Image Preview" id="preview-img" /><br />
+</div>
+<div id="cubelist">
 <%= render 'cube_controls' %>
 
-<%= render @cube.cube_cards %>
+<!--<= render @cube.cube_cards >-->
 
-<%= render 'cards/add_card' %>
+<%= render 'cube_cards/cube_card3' %>
 
-<%= link_to 'All cubes you own', controller: 'cubes' %>
+</div>
+<div id="cube-stats">
+  <p>Cards in Cube: <strong><%= @cube.cube_cards.length %></strong></p>
+  <%= render 'cards/add_card' %>
+  <%= link_to 'All cubes you own', controller: 'cubes' %>
+</div>
+<script type="text/javascript">
+  var defaultImg = document.querySelector("#preview-img").src;
+  document.querySelectorAll(".cardlink").forEach(function (cur) {
+    cur.addEventListener("mouseover", function () {
+      document.querySelector("#preview-img").src = cur.getAttribute("data-image");
+    });
+    cur.addEventListener("mouseleave", function () {
+      document.querySelector("#preview-img").src = defaultImg;
+    });
+    cur.addEventListener("click", function () {
+      document.querySelector("#preview-img").src = cur.getAttribute("data-high-res");
+      defaultImg = cur.getAttribute("data-high-res");
+      document.querySelector("#preview-edit").href = cur.getAttribute("data-edit");
+      document.querySelector("#preview-delete").href = cur.getAttribute("data-card-path");
+    });
+  });
+</script>
+</div>

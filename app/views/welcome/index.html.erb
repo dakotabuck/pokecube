@@ -1,5 +1,15 @@
 <h1>Cube Homepage - This Page should be a dashboard</h1>
 
+<table>
+  <% Pokemon::Subtype.all.each do |stype| %>
+    <tr>
+    <td><%= stype %></td>
+    <% Pokemon::Card.where(page: 1).where(pageSize: 3).where(subtype: stype).all.each do |card| %>
+      <td><%= image_tag card.image_url %></td>
+    <% end %>
+    </tr>
+  <% end %>
+</table>
 <%= link_to 'Register', { controller: 'users', action: 'new' } %>
 
 <%= link_to 'List all Cubes you Own', controller: 'cubes' %>

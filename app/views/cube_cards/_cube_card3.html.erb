@@ -1,0 +1,119 @@
+<%
+  # Build a model of cards to add, with all relevant information in place:
+  def TypeObj
+    return {
+      "Pokémon" => {
+        "Basic" => [],
+        "Stage 1" => [],
+        "Stage 2" => [],
+        "Restored" => [],
+        "EX" => [],
+        "Level Up" => [],
+        "MEGA" => [],
+        "LEGEND" => [],
+        "BREAK" => []
+      },
+      "Trainer" => {
+        "Item" => [],
+        "Supporter" => [],
+        "Technical Machine" => [],
+        "Rocket's Secret Machine" => [],
+        "Stadium" => [],
+        "BREAK" => [],
+        "Pokémon Tool" => []
+      }
+    }
+  end
+
+  colors_object = {}
+  Pokemon::Type.all.each do |type|
+    colors_object[type] = TypeObj()
+  end
+  colors_object["Other"] = {
+    "Trainer" => {
+      "Item" => [],
+      "Supporter" => [],
+      "Technical Machine" => [],
+      "Rocket's Secret Machine" => [],
+      "Stadium" => [],
+      "BREAK" => [],
+      "Pokémon Tool" => []
+    },
+    "Energy" => {
+      "Special" => []
+    }
+  }
+
+  @cube.cube_cards.each do |cube_card|
+    current_card = [Pokemon::Card.find(cube_card.set_id + "-" + cube_card.card_number), [cube_card.cube, cube_card]]
+    # todo: do an if/else to make sure there is only one element in current_card[0].types
+    if current_card[0].types.blank?
+      current_card[0].types = ["Other"]
+    end
+    if current_card[0].supertype != "Energy"
+      colors_object[current_card[0].types[0]][current_card[0].supertype][current_card[0].subtype] << current_card
+    else
+      colors_object["Other"]["Energy"]["Special"] << current_card
+    end
+  end
+%>
+<% colors_object.each do |type,supertypes| %>
+  <%= content_tag :fieldset, class: [type + "-set"] do %>
+    <legend><%= type %></legend>
+    <div>
+      <% supertypes.each do |supertype,subtypes| %>
+        <%= content_tag :div, class: "supertype" do %>
+          <p><%= supertype %></p>
+          <div>
+            <% subtypes.each do |subtype,cards_obj| %>
+              <% if !cards_obj.empty? %>
+                <%= content_tag :div, class: "subtype" do %>
+                  <p><%= subtype %></p>
+                  <ul>
+                    <% cards_obj.each do |my_card| %>
+                      <li><%= link_to my_card[0].name, 'javascript:void(0);', data: {
+                        :image => my_card[0].image_url,
+                        "high-res" => my_card[0].image_url_hi_res,
+                        :edit => url_for([:edit] + my_card[1]),
+                        "card-path" => url_for(my_card[1])
+                      }, class: "cardlink" %></li>
+                    <% end %>
+                  </ul>
+                <% end #content_tag :div.subtype %>
+              <% end %>
+            <% end #subtypes.each %>
+          </div>
+        <% end #content_tag :div.supertype %>
+      <% end %>
+    </div>
+  <% end #content_tag :fieldset %>
+<% end%>
+
+<!--
+  to do:
+    Build a model of the cards to add, with all relative information in place. Then, read it out to the necessary fields. example:
+    factored = {
+      types: {
+        "Colorless": {
+          "Stage 1": [Pokemon::Card(Linoone), Pokemon::Card(Clefable)],
+          "Stage 2": [],
+          "Basic": [Pokemon::Card(Clefairy), Pokemon::Card(Zigzagoon)]
+        },
+        "Electric": {
+          "Stage 1": [Pokemon::Card(Pikachu)]
+        }
+      }
+    }
+
+    Then, do a .each for factored.types as |typeset|
+      <div/typeset.name>
+      Then, typeset.each do |subtype|
+        if subtype !empty
+          <div/subtype.name>
+          Then, subtype.each do |card|
+            <linkto/card>
+          e
+        e
+      e
+    e
+-->

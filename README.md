@@ -8,6 +8,9 @@ To install this rails app, simply clone the directory, navigate to it and type:
 
 To do
 -----
+* Add columns to cube_card:
+  + Stage Line (Basic only / Stage 1 line / Stage 2 line)
+  + Type override (For trainer cards that favor a specific type)
 * Establish database relational columns (user has many cube owners)
 * Implement Heroku
 * Strengthen accounts system

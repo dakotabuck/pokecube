@@ -34,10 +34,18 @@ a:active {
   display: flex;
 }
 
-#cubelist, #cube-stats {
+#cubelist {
   border-left: 1px dotted black;
   padding: 0px 15px 0px 15px;
   flex-grow: 2;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+#cube-stats {
+  border-left: 1px dotted black;
+  padding: 0px 15px 0px 15px;
+  /*flex-grow: 1;*/
   max-height: 100vh;
   overflow-y: scroll;
 }
@@ -56,15 +64,18 @@ fieldset {
   }
 }
 
-.supertype {
+.type {
   text-align: center;
   background-color: #fcfcfc;
-}
-
-.supertype > div {
+  padding: 5px;
+  margin-bottom: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1em;
   font: .72em Helvetica, sans-serif;
+  p {
+    margin: 0px;
+  }
 }
 
 .typesep {
@@ -134,11 +145,14 @@ fieldset {
    p {
      margin: 0px;
      padding: 5px 15px 5px 15px;
-     border-bottom: 1px dotted #ddd;
+
    }
 
    ul {
      list-style-type: none;
      padding: 5px 15px 5px 15px;
+     li:first-of-type {
+       border-top: 1px dotted #ddd;
+     }
    }
 }

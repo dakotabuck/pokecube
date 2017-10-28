@@ -1,90 +1,114 @@
 <%
   # Build a model of cards to add, with all relevant information in place:
-  def TypeObj
-    return {
-      "Pokémon" => {
-        "Basic" => [],
-        "Stage 1" => [],
-        "Stage 2" => [],
-        "Restored" => [],
-        "EX" => [],
-        "Level Up" => [],
-        "MEGA" => [],
-        "LEGEND" => [],
-        "BREAK" => []
-      },
-      "Trainer" => {
+  def TypeObj(type)
+    if type == "Trainer"
+      return {
         "Item" => [],
         "Supporter" => [],
         "Technical Machine" => [],
         "Rocket's Secret Machine" => [],
         "Stadium" => [],
-        "BREAK" => [],
-        "Pokémon Tool" => []
+        "Pokémon Tool" => [],
+        "Special" => [],
+        "Energy" => []
       }
+    end
+
+    return {
+      "Basic" => [],
+      "Stage 1" => [],
+      "Stage 2" => [],
+      "Restored" => [],
+      "EX" => [],
+      "Level Up" => [],
+      "MEGA" => [],
+      "LEGEND" => [],
+      "BREAK" => [],
+      "Trainer" => [],
     }
   end
 
-  colors_object = {}
-  Pokemon::Type.all.each do |type|
-    colors_object[type] = TypeObj()
+  typelist = [
+    "Grass",
+    "Fire",
+    "Water",
+    "Lightning",
+    "Psychic",
+    "Fighting",
+    "Darkness",
+    "Metal",
+    "Fairy",
+    "Dragon",
+    "Colorless",
+    "Trainer"
+  ]
+
+  def process_subtype(name)
+    if name == "Energy"
+      name = "Special Energy"
+    elsif name == "Special"
+      name = "Ace-Spec"
+    end
+
+    return name
   end
-  colors_object["Other"] = {
-    "Trainer" => {
-      "Item" => [],
-      "Supporter" => [],
-      "Technical Machine" => [],
-      "Rocket's Secret Machine" => [],
-      "Stadium" => [],
-      "BREAK" => [],
-      "Pokémon Tool" => []
-    },
-    "Energy" => {
-      "Special" => []
-    }
-  }
+
+  must_display = ["Basic", "Stage 1", "Stage 2", "Trainer", "Item", "Pokémon Tool", "Energy"]
+
+  # typecount counts the number of cards in each type
+  typecount = {}
+  colors_object = {}
+
+  typelist.each do |type|
+    colors_object[type] = TypeObj(type)
+    typecount[type] = 0
+  end
 
   @cube.cube_cards.each do |cube_card|
     current_card = [Pokemon::Card.find(cube_card.set_id + "-" + cube_card.card_number), [cube_card.cube, cube_card]]
     # todo: do an if/else to make sure there is only one element in current_card[0].types
     if current_card[0].types.blank?
-      current_card[0].types = ["Other"]
+      current_card[0].types = ["Trainer"]
     end
-    if current_card[0].supertype != "Energy"
-      colors_object[current_card[0].types[0]][current_card[0].supertype][current_card[0].subtype] << current_card
+
+    typecount[current_card[0].types[0]] += 1
+
+    # assign the card to the correct array
+    if current_card[0].supertype == "Energy"
+      colors_object[current_card[0].types[0]]["Energy"] << current_card
     else
-      colors_object["Other"]["Energy"]["Special"] << current_card
+      colors_object[current_card[0].types[0]][current_card[0].subtype] << current_card
+    end
+  end
+
+  # Sort the cards in alphabetical order
+  colors_object.each do |type,subtypes|
+    subtypes.each do |subtype,cards_obj|
+      colors_object[type][subtype] = colors_object[type][subtype].sort_by { |card| card[0].name.downcase }
     end
   end
 %>
-<% colors_object.each do |type,supertypes| %>
+<% colors_object.each do |type,subtypes| %>
   <%= content_tag :fieldset, class: [type + "-set"] do %>
-    <legend><%= type %></legend>
-    <div>
-      <% supertypes.each do |supertype,subtypes| %>
-        <%= content_tag :div, class: "supertype" do %>
-          <p><%= supertype %></p>
-          <div>
-            <% subtypes.each do |subtype,cards_obj| %>
-              <% if !cards_obj.empty? %>
-                <%= content_tag :div, class: "subtype" do %>
-                  <p><%= subtype %></p>
-                  <ul>
-                    <% cards_obj.each do |my_card| %>
-                      <li><%= link_to my_card[0].name, 'javascript:void(0);', data: {
-                        :image => my_card[0].image_url,
-                        "high-res" => my_card[0].image_url_hi_res,
-                        :edit => url_for([:edit] + my_card[1]),
-                        "card-path" => url_for(my_card[1])
-                      }, class: "cardlink" %></li>
-                    <% end %>
-                  </ul>
-                <% end #content_tag :div.subtype %>
+    <legend><%= type + " (" + typecount[type].to_s + ")" %></legend>
+    <div class="type">
+      <% subtypes.each do |subtype,cards_obj| %>
+        <% if cards_obj.present? or must_display.include?(subtype)  %>
+          <%= content_tag :div, class: "subtype" do %>
+            <p><%= process_subtype(subtype) + " (" + cards_obj.size.to_s + ")" %></p>
+            <ul>
+              <% cards_obj.each do |my_card| %>
+                <li><%= link_to my_card[0].name, 'javascript:void(0);', data: {
+                  :image => my_card[0].image_url,
+                  "high-res" => my_card[0].image_url_hi_res,
+                  :edit => url_for([:edit] + my_card[1]),
+                  "card-path" => url_for(my_card[1])
+                }, class: "cardlink" %></li>
               <% end %>
-            <% end #subtypes.each %>
-          </div>
-        <% end #content_tag :div.supertype %>
-      <% end %>
+            </ul>
+          <% end #content_tag :div.subtype %>
+        <% end %>
+      <% end #subtypes.each %>
     </div>
   <% end #content_tag :fieldset %>
 <% end%>

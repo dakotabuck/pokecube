@@ -1,6 +1,6 @@
 <h1>Edit Card</h1>
 
-<%= form_with(model: [@cube, @cube.cube_cards.build]) do |form| %>
+<%= form_with(model: [@cube, @cube_card], local: true, method: :patch) do |form| %>
 
   <% if @cube_card.errors.any? %>
     <div id="error_explanation">

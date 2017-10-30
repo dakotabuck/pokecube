@@ -6,13 +6,6 @@ class CubeCardsController < ApplicationController
     redirect_to cube_path(@cube)
   end
 
-  def destroy
-    @cube = Cube.find(params[:cube_id])
-    @cube_card = @cube.cube_cards.find(params[:id])
-    @cube_card.destroy
-    redirect_to cube_path(@cube)
-  end
-
   def edit
     @cube = Cube.find(params[:cube_id])
     @cube_card = @cube.cube_cards.find(params[:id])
@@ -27,6 +20,13 @@ class CubeCardsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @cube = Cube.find(params[:cube_id])
+    @cube_card = @cube.cube_cards.find(params[:id])
+    @cube_card.destroy
+    redirect_to cube_path(@cube)
   end
 
   private

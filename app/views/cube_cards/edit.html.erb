@@ -1,0 +1,46 @@
+<h1>Edit Card</h1>
+
+<%= form_with(model: [@cube, @cube.cube_cards.build]) do |form| %>
+
+  <% if @cube_card.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@cube_card.errors.count, "error") %> prohibited
+        this card from being saved:
+      </h2>
+      <ul>
+        <% @cube_card.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :image %><br>
+    <%= form.text_field :image %>
+  </p>
+
+  <p>
+    <%= form.label :tags %><br>
+    <%= form.text_area :tags %>
+  </p>
+
+  <p class="evoline">
+    <%= form.radio_button :evolutionary_line, "none" %>
+    <%= form.label :evolutionary_line_none, "N/A" %><br>
+    <%= form.radio_button :evolutionary_line, "basic" %>
+    <%= form.label :evolutionary_line_basic, "Basic" %><br>
+    <%= form.radio_button :evolutionary_line, "stage 1" %>
+    <%= form.label :evolutionary_line_stage_1, "Stage 1" %><br>
+    <%= form.radio_button :evolutionary_line, "stage 2" %>
+    <%= form.label :evolutionary_line_stage_2, "Stage 2" %><br>
+  </p>
+
+  <p>
+    <%= form.submit "Update card" %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', cube_path(@cube) %>

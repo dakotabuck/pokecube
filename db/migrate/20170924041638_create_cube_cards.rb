@@ -9,6 +9,7 @@ class CreateCubeCards < ActiveRecord::Migration[5.1]
       t.string :pimp
       t.string :rarity
       t.boolean :side
+      t.string :evolutionary_line
       t.datetime :timestamps
 
       t.timestamps

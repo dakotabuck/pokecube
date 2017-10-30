@@ -1,6 +1,7 @@
 <%
   # Build a model of cards to add, with all relevant information in place:
   def TypeObj(type)
+    # If the card is a trainer, it will have different subtypes
     if type == "Trainer"
       return {
         "Item" => [],
@@ -14,6 +15,7 @@
       }
     end
 
+    # Default to the card being a Pokemon
     return {
       "Basic" => [],
       "Stage 1" => [],
@@ -28,6 +30,8 @@
     }
   end
 
+  # This will influence the order in which cards are listed on
+  #   the energy curve page
   typelist = [
     "Grass",
     "Fire",
@@ -43,6 +47,8 @@
     "Trainer"
   ]
 
+  # Add a case to this if the name of your type is discordant from
+  #   what you want displayed as the description for it
   def process_subtype(name)
     if name == "Energy"
       name = "Special Energy"
@@ -53,24 +59,35 @@
     return name
   end
 
+  # Determines what to display empty fields for, for legibility's sake.
   must_display = ["Basic", "Stage 1", "Stage 2", "Trainer", "Item", "Pokémon Tool", "Energy"]
 
   # typecount counts the number of cards in each type
   typecount = {}
   colors_object = {}
 
+  # Assigns the card types to a hash that will serve as the HTML model
   typelist.each do |type|
     colors_object[type] = TypeObj(type)
     typecount[type] = 0
   end
 
+  # Assigns the cards to the card types hashes from the last each...do
   @cube.cube_cards.each do |cube_card|
+    if cube_card.set_id.blank? || cube_card.card_number.blank?
+      cube_card.destroy
+      puts "A critical error occurred: card present with no ID"
+      exit
+    end
     current_card = [Pokemon::Card.find(cube_card.set_id + "-" + cube_card.card_number), [cube_card.cube, cube_card]]
     # todo: do an if/else to make sure there is only one element in current_card[0].types
+
+    # Special case for typeless trainers
     if current_card[0].types.blank?
       current_card[0].types = ["Trainer"]
     end
 
+    # Keep track of the number of cards of each type to avoid performance sink
     typecount[current_card[0].types[0]] += 1
 
     # assign the card to the correct array
@@ -98,13 +115,17 @@
             <p><%= process_subtype(subtype) + " (" + cards_obj.size.to_s + ")" %></p>
             <ul>
               <% cards_obj.each do |my_card| %>
-                <li><%= link_to my_card[0].name, 'javascript:void(0);', data: {
-                  :image => my_card[0].image_url,
-                  "high-res" => my_card[0].image_url_hi_res,
-                  :edit => url_for([:edit] + my_card[1]),
-                  "card-path" => url_for(my_card[1])
-                }, class: "cardlink" %></li>
-              <% end %>
+                <li>
+                  <%=
+                    link_to my_card[0].name, 'javascript:void(0);', data: {
+                      :image => my_card[0].image_url,
+                      "high-res" => my_card[0].image_url_hi_res,
+                      :edit => url_for([:edit] + my_card[1]),
+                      "card-path" => url_for(my_card[1])
+                    }, class: "cardlink"
+                  %>
+                </li>
+              <% end #cards_obj.each %>
             </ul>
           <% end #content_tag :div.subtype %>
         <% end %>
@@ -112,32 +133,3 @@
     </div>
   <% end #content_tag :fieldset %>
 <% end%>
-
-<!--
-  to do:
-    Build a model of the cards to add, with all relative information in place. Then, read it out to the necessary fields. example:
-    factored = {
-      types: {
-        "Colorless": {
-          "Stage 1": [Pokemon::Card(Linoone), Pokemon::Card(Clefable)],
-          "Stage 2": [],
-          "Basic": [Pokemon::Card(Clefairy), Pokemon::Card(Zigzagoon)]
-        },
-        "Electric": {
-          "Stage 1": [Pokemon::Card(Pikachu)]
-        }
-      }
-    }
-
-    Then, do a .each for factored.types as |typeset|
-      <div/typeset.name>
-      Then, typeset.each do |subtype|
-        if subtype !empty
-          <div/subtype.name>
-          Then, subtype.each do |card|
-            <linkto/card>
-          e
-        e
-      e
-    e
--->

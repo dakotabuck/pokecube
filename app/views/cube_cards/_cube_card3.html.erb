@@ -18,14 +18,23 @@
     # Default to the card being a Pokemon
     return {
       "Basic" => [],
-      "Stage 1" => [],
-      "Stage 2" => [],
-      "Restored" => [],
-      "EX" => [],
-      "Level Up" => [],
-      "MEGA" => [],
-      "LEGEND" => [],
-      "BREAK" => [],
+      "Stage 1" => {
+        "Basic" => [],
+        "Stage 1" => []
+      },
+      "Stage 2" => {
+        "Basic" => [],
+        "Stage 1" => [],
+        "Stage 2" => []
+      },
+      "Plus Line" => {
+        "Restored" => [],
+        "EX" => [],
+        "Level Up" => [],
+        "MEGA" => [],
+        "LEGEND" => [],
+        "BREAK" => []
+      },
       "Trainer" => [],
     }
   end
@@ -57,6 +66,21 @@
     end
 
     return name
+  end
+
+  # Function for displaying the name of each evo line
+  def process_evolutionary_line(name)
+    if name == "Stage 1"
+      name = "Stage 1 Line"
+    elsif name == "Stage 2"
+      name = "Stage 2 Line"
+    elsif name == "Basic"
+      name = "Basic Only"
+    elsif name == "Trainer"
+      name = "Trainer"
+    else
+      name = "Plus Line"
+    end
   end
 
   # Determines what to display empty fields for, for legibility's sake.
@@ -94,16 +118,39 @@
     if current_card[0].supertype == "Energy"
       colors_object[current_card[0].types[0]]["Energy"] << current_card
     else
-      colors_object[current_card[0].types[0]][current_card[0].subtype] << current_card
+      if ['other', 'stage 1', 'stage 2'].include?(current_card[1][1].evolutionary_line)
+        if current_card[1][1].evolutionary_line == 'other'
+          colors_object[current_card[0].types[0]]["Plus Line"][current_card[0].subtype] << current_card
+        elsif current_card[1][1].evolutionary_line == 'stage 1'
+          colors_object[current_card[0].types[0]]["Stage 1"][current_card[0].subtype] << current_card
+        elsif current_card[1][1].evolutionary_line == 'stage 2'
+          colors_object[current_card[0].types[0]]["Stage 2"][current_card[0].subtype] << current_card
+        end
+      else
+        puts "\n\n\n\n" + current_card[0].types.inspect + "\n\n\n"
+        if ['Basic', 'Trainer'].include?(current_card[0].subtype) || 'Trainer' == current_card[0].supertype
+          colors_object[current_card[0].types[0]][current_card[0].subtype] << current_card
+        else
+          colors_object[current_card[0].types[0]][current_card[0].subtype][current_card[0].subtype] << current_card
+        end
+      end
     end
   end
 
   # Sort the cards in alphabetical order
+=begin
   colors_object.each do |type,subtypes|
     subtypes.each do |subtype,cards_obj|
-      colors_object[type][subtype] = colors_object[type][subtype].sort_by { |card| card[0].name.downcase }
+      if ['Trainer', 'Basic'].include? subtype
+        colors_object[type][subtype] = colors_object[type][subtype].sort_by { |card| card[0].name.downcase }
+      else
+        cards_obj.each do |sub_subtype,sub_cards_obj|
+          colors_object[type][subtype][sub_subtype] = colors_object[type][subtype][sub_subtype].sort_by { |card| card[0].name.downcase }
+        end
+      end
     end
   end
+=end
 %>
 <% colors_object.each do |type,subtypes| %>
   <%= content_tag :fieldset, class: [type + "-set"] do %>
@@ -112,24 +159,50 @@
       <% subtypes.each do |subtype,cards_obj| %>
         <% if cards_obj.present? or must_display.include?(subtype)  %>
           <%= content_tag :div, class: "subtype" do %>
-            <p><%= process_subtype(subtype) + " (" + cards_obj.size.to_s + ")" %></p>
-            <ul>
-              <% cards_obj.each do |my_card| %>
-                <li>
-                  <%=
-                    link_to my_card[0].name, 'javascript:void(0);', data: {
-                      :image => my_card[0].image_url,
-                      "high-res" => my_card[0].image_url_hi_res,
-                      :edit => url_for([:edit] + my_card[1]),
-                      "card-path" => url_for(my_card[1])
-                    }, class: "cardlink"
-                  %>
-                </li>
+            <p><strong><%= process_evolutionary_line(subtype)
+              # + " (" + cards_obj.size.to_s + ")"
+             %></strong></p>
+            <% if ['Basic'].include?(subtype) || ['Trainer', 'Energy'].include?(type) %>
+              <ul>
+                <% cards_obj.each do |my_card| %>
+                  <li>
+                    <%=
+                      link_to my_card[0].name, 'javascript:void(0);', data: {
+                        :image => my_card[0].image_url,
+                        "high-res" => my_card[0].image_url_hi_res,
+                        :edit => url_for([:edit] + my_card[1]),
+                        "card-path" => url_for(my_card[1])
+                      }, class: "cardlink"
+                    %>
+                  </li>
+                <% end #cards_obj.each %>
+              </ul>
+            <% else %>
+              <% cards_obj.each do |sub_subtype,sub_cards_obj| %>
+                <% if sub_cards_obj.present? %>
+                  <p><%= process_subtype(sub_subtype)
+                  # + " (" + sub_cards_obj.size.to_s + ")"
+                    %></p>
+                  <ul>
+                    <% sub_cards_obj.each do |my_card| %>
+                      <li>
+                        <%=
+                          link_to my_card[0].name, 'javascript:void(0);', data: {
+                            :image => my_card[0].image_url,
+                            "high-res" => my_card[0].image_url_hi_res,
+                            :edit => url_for([:edit] + my_card[1]),
+                            "card-path" => url_for(my_card[1])
+                          }, class: "cardlink"
+                        %>
+                      </li>
+                    <% end #sub_cards_obj.each %>
+                  </ul>
+                <% end %>
               <% end #cards_obj.each %>
-            </ul>
+            <% end %>
           <% end #content_tag :div.subtype %>
         <% end %>
       <% end #subtypes.each %>
     </div>
   <% end #content_tag :fieldset %>
-<% end%>
+<% end %>

@@ -2,15 +2,8 @@
   Add a Card:
   <%= form_with(model: [ @cube, @cube.cube_cards.build ], local: true, id: "selection-card") do |form| %>
   <p>
-    <%
-      select_options = Pokemon::Set.all
-    %>
-    <%= form.select :set_id do %>
-      <% select_options.each do |set_option| %>
-          <%= content_tag :option, set_option.name, value: set_option.code %>
-      <% end %>
-    <% end %>
-    <%= form.number_field :card_number, in:1..300, step: 1 %>
+    <%= form.collection_select(:set_id, Pokemon::Set.all, :code, :name) %>
+    <%= form.number_field :card_number, in:1..300, step: 1, id: "card-id" %>
   </p>
   <p>
     <%= form.submit %>
@@ -19,5 +12,9 @@
     <img id="card-preview" alt="card preview" />
   </p>
   <% end %>
+  <input type="text" id="card-search-field" /><button id="search-submit">Search</button>
+  <div id="card-search">
+
+  </div>
 </p>
 <%= javascript_include_tag :forced %>

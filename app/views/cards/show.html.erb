@@ -1,13 +1,26 @@
-<div style="display: flex;">
-  <div>
-    <p>Name: <%= @card.name %></p>
-    <p>Set: <%= @card.set %></p>
-    <p>Number: <%= @card.number %></p>
-    <p>Type: <%= @card.pokemontype %></p>
-    <p>Stage: <%= @card.stage %></p>
-    <p>Rarity: <%= @card.rarity %></p>
-  </div>
-  <div>
-    <%= image_tag @card.image, alt: @card.name %>
-  </div>
+<div style="display: flex;flex-direction: column;">
+  <%# @par.inspect %>
+  <% @card.each do |card_inf| %>
+    <!--<div>
+      <p>Name: <%# @card.name %></p>
+      <p>Set: <%# @card.set %></p>
+      <p>Number: <%# @card.number %></p>
+      <p>Type: <%# @card.pokemontype %></p>
+      <p>Stage: <%# @card.stage %></p>
+      <p>Rarity: <%# @card.rarity %></p>
+      <%= card_inf.inspect %>
+    </div>-->
+    <div style="display: flex;">
+        <button id="add-card-<%= card_inf.id %>">+</button>
+        <div style="min-width: 100px;"><%= image_tag card_inf.image_url, alt: card_inf.name, style: "max-width: 100px; height: 130px;" %></div>
+        <div style="line-height: 130px;"><%= card_inf.name + " (" + card_inf.id + ")" %></div>
+        <script type="text/javascript">
+          $("#add-card-<%= card_inf.id %>").click(function () {
+            var n = "<%= card_inf.id %>".split("-");
+            $("[name='cube_card[set_id]']").val(n[0]);
+            $("#card-id").val(n[1]);
+          });
+        </script>
+    </div>
+  <% end %>
 </div>

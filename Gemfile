@@ -9,7 +9,10 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Creates secure password hashes
-gem 'bcrypt', '3.1.11'
+gem 'bcrypt', '3.1.11', platforms: :ruby
+# platforms: :ruby was added for the windows workaround to bcrypt issue described
+# in this thread: https://github.com/codahale/bcrypt-ruby/issues/149
+# -dak
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -21,6 +24,8 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+
+#gem 'bcrypt-ruby', '3.1.1.rc1', :require => 'bcrypt'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

@@ -12,3 +12,5 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require jquery-3.2.1.min.js
+//= require cubelogic.js

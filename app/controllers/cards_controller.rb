@@ -22,7 +22,8 @@ class CardsController < ApplicationController
   end
 
   def show
-    @card = Card.find(params[:id])
+    @par = params
+    @card = Pokemon::Card.where(page: 1).where(pageSize: 10).where(name: params[:id]).all
   end
 
   def update

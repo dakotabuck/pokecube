@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Creates secure password hashes
-gem 'bcrypt', '3.1.11', platforms: :ruby
+gem 'bcrypt', '3.1.11', :require => 'bcrypt'
 # platforms: :ruby was added for the windows workaround to bcrypt issue described
 # in this thread: https://github.com/codahale/bcrypt-ruby/issues/149
 # -dak

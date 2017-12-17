@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :cards
 
   resources :cubes do
-    resources :cube_cards, :action => 'edit'
+    resources :cube_cards#, :action => 'edit'
   end
 
   # this doesn't work because it still requires /cube_card/xx

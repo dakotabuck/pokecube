@@ -21,6 +21,14 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def login
+    @user = User.where('email = ? AND password_digest = ?', params[:email], params[:password_digest]).take
+    if @user.valid?
+      # do stuff
+      
+    end
+  end
+
   # POST /users
   # POST /users.json
   def create
